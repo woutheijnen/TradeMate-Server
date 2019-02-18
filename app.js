@@ -1,20 +1,35 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
 
-var app = express();
+const app = express();
 
+// Body parser middleware
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+// DB Config
+const db = require('./config/keys').mongoURI;
+mongoose
+  .connect(db, {useNewUrlParser: true})
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
+
+// Passport middleware
+app.use(passport.initialize());
+require('./config/passport')(passport);
+
+// Logger
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+const port = process.env.PORT || 3323;
+app.listen(port, () => console.log(`Server running on port ${port}`));
 
 module.exports = app;
