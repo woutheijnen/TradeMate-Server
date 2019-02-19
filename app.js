@@ -31,12 +31,9 @@ app.use(logger('dev'));
 app.use('/', indexRouter);
 app.use('/bot', botRouter);
 
-// Error handlers
+// HTTP Error 404 handler
 app.use(function(req, res, next) {
 	res.status(404).json({ status: 404, message: `Cannot ${req.method} ${req.path}` });
 });
-
-const port = process.env.PORT || 3323;
-app.listen(port, () => console.log(`Server running on port ${port}`));
 
 module.exports = app;
