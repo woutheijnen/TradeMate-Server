@@ -33,7 +33,7 @@ app.use('/bot', botRouter);
 
 // Error handlers
 app.use(function(req, res, next) {
-	res.status(404).json({ error: 404, message: `Cannot ${req.method} ${req.path}` });
+	res.status(404).json({ status: 404, message: `Cannot ${req.method} ${req.path}` });
 });
 
 const port = process.env.PORT || 3323;
