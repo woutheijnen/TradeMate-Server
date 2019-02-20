@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const botRouter = require('./routes/bot');
+const userRouter = require('./routes/user');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(logger('dev'));
 // Routes
 app.use('/', indexRouter);
 app.use('/bot', botRouter);
+app.use('/user', userRouter);
 
 // HTTP Error 404 handler
 app.use(function(req, res, next) {
