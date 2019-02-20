@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const passport = require('passport');
 
-// Load Input Validation
+// Input validators
 const validateLoginInput = require('../validation/login');
+const validateRegisterInput = require('../validation/register');
 
 // Load User model
 const User = require('../models/User');
@@ -23,7 +24,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 	});
 });
 
-// @route   GET /users/login
+// @route   GET /user/login
 // @desc    Login user / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
@@ -43,14 +44,7 @@ router.post('/login', (req, res) => {
 		bcrypt.compare(password, user.password).then((isMatch) => {
 			if (user && isMatch) {
 				// User Matched
-				const payload = {
-					id: user.id,
-					name: user.name,
-					email: user.email,
-					role: user.role,
-					remoteAddress: req.connection.remoteAddress,
-					xForwardedFor: req.headers['x-forwarded-for']
-				};
+				const payload = getPayload(req, user);
 
 				// Create JWT Payload & Sign Token
 				jwt.sign(
@@ -73,5 +67,59 @@ router.post('/login', (req, res) => {
 		});
 	});
 });
+
+// @route   GET /user/register
+// @desc    Register an user, endpoint must be activated in .env file
+// @access  Public
+router.post('/register', (req, res) => {
+	const { errors, isValid } = validateRegisterInput(req.body);
+
+	// Check Validation
+	if (!isValid) {
+		if (errors.masterPassword) {
+			return res.status(403).json(errors);
+		} else {
+			return res.status(400).json(errors);
+		}
+	}
+
+	User.findOne({ email: req.body.email }).then((user) => {
+		if (user) {
+			errors.email = 'Email already exists';
+			return res.status(400).json(errors);
+		} else {
+			const newUser = new User({
+				name: req.body.name,
+				email: req.body.email,
+				password: req.body.password,
+				role: req.body.role
+			});
+
+			bcrypt.genSalt(16, (err, salt) => {
+				bcrypt.hash(newUser.password, salt, (err, hash) => {
+					if (err) throw err;
+					newUser.password = hash;
+					newUser
+						.save()
+						.then((user) => {
+							return res.json(getPayload(req, user));
+						})
+						.catch((err) => console.log(err));
+				});
+			});
+		}
+	});
+});
+
+const getPayload = (req, user) => {
+	return {
+		id: user.id,
+		name: user.name,
+		email: user.email,
+		role: user.role,
+		remoteAddress: req.connection.remoteAddress,
+		xForwardedFor: req.headers['x-forwarded-for']
+	};
+};
 
 module.exports = router;
