@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+// DataFetcher model
+const DataFetcher = require("../models/DataFetcher");
 
 // @route   GET /data-fetcher/list
 // @desc    List data-fetchers
@@ -14,8 +16,9 @@ router.get("/list", passport.authenticate("jwt", { session: false }), (req, res)
 // @desc    Shows details for a data-fetcher
 // @access  Private
 router.get("/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-  // TODO
-  res.json({ message: "Not implemented yet" });
+  DataFetcher.findById(req.params.id)
+    .then(fetcher => res.json(fetcher))
+    .catch(err => res.status(404).json({ message: `No data-fetcher found with id ${req.params.id}` }));
 });
 
 // @route   POST /data-fetcher/create
