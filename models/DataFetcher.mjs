@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const DataFetcherSchema = new Schema({
-  exchanges: { type: String, required: true },
+  exchange: { type: String, required: true },
   apiKey: { type: String, required: true },
   apiSecret: { type: String, required: true },
   from: { type: Date, required: true },
@@ -14,7 +14,7 @@ const DataFetcherSchema = new Schema({
   keepUpToDate: { type: Boolean, required: true },
   // In minutes
   timestamp: { type: Number, required: true },
-  tradeableAssets: [String]
+  assets: [String]
 });
 
 export default model("data-fetchers", DataFetcherSchema);

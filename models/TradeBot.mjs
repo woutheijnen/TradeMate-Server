@@ -10,7 +10,7 @@ const TradeBotSchema = new Schema({
   apiKey: { type: String, required: true },
   apiSecret: { type: String, required: true },
   // In minutes
-  timestamp: { type: Number, required: true },
+  timeframe: { type: Number, required: true },
   tradeableAssets: { type: [String], required: true }
 });
 
