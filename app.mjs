@@ -12,8 +12,8 @@ import dataFetcherRouter from "./routes/dataFetcher";
 import tradeBotRouter from "./routes/tradeBot";
 import userRouter from "./routes/user";
 
-dotenv.config();
 const app = express();
+dotenv.config();
 passportConf(passport);
 
 // Body parser middleware
