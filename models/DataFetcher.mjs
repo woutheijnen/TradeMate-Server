@@ -13,7 +13,7 @@ const DataFetcherSchema = new Schema({
   // Keep records up to date
   keepUpToDate: { type: Boolean, required: true },
   // In minutes
-  timestamp: { type: Number, required: true },
+  timeframe: { type: Number, required: true },
   assets: [String]
 });
 
