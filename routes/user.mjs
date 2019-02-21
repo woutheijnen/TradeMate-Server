@@ -1,16 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
-const passport = require("passport");
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { passportSecretKey } from "../config/keys";
+import passport from "passport";
+import User from "../models/User";
 
 // Input validators
-const validateLoginInput = require("../validation/login");
-const validateRegisterInput = require("../validation/register");
+import validateLoginInput from "../validation/login";
+import validateRegisterInput from "../validation/register";
 
-// Load User model
-const User = require("../models/User");
+const router = express.Router();
 
 // @route   GET /user/me
 // @desc    Return current logged in user
@@ -49,7 +48,7 @@ router.post("/login", (req, res) => {
         // Create JWT Payload & Sign Token
         jwt.sign(
           payload,
-          keys.secretOrKey,
+          passportSecretKey,
           {
             expiresIn: 3600
           },
@@ -122,4 +121,4 @@ const getPayload = (req, user) => {
   };
 };
 
-module.exports = router;
+export default router;

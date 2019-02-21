@@ -1,31 +1,33 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const passport = require("passport");
-const logger = require("morgan");
-require("dotenv").config();
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import { mongoURI } from "./config/keys";
+import passport from "passport";
+import passportConf from "./config/passport";
+import logger from "morgan";
+import dotenv from "dotenv";
 
-const indexRouter = require("./routes/index");
-const dataFetcherRouter = require("./routes/dataFetcher");
-const tradeBotRouter = require("./routes/tradeBot");
-const userRouter = require("./routes/user");
+import indexRouter from "./routes/index";
+import dataFetcherRouter from "./routes/dataFetcher";
+import tradeBotRouter from "./routes/tradeBot";
+import userRouter from "./routes/user";
 
+dotenv.config();
 const app = express();
+passportConf(passport);
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(mongoURI, { useNewUrlParser: true })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
-require("./config/passport")(passport);
 
 // Logger
 app.use(logger("dev"));
@@ -41,4 +43,4 @@ app.use(function(req, res, next) {
   res.status(404).json({ status: 404, message: `Cannot ${req.method} ${req.path}` });
 });
 
-module.exports = app;
+export default app;

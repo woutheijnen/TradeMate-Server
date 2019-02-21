@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import passport from "passport";
+
 const router = express.Router();
-const passport = require("passport");
 
 // @route   POST /trade-bot/create
 // @desc    Creates a new trade bot
@@ -10,4 +11,4 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
   res.json({ message: "Not implemented yet" });
 });
 
-module.exports = router;
+export default router;

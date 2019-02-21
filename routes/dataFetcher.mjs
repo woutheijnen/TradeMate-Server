@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
+import passport from "passport";
+import DataFetcher from "../models/DataFetcher";
+
 const router = express.Router();
-const passport = require("passport");
-// DataFetcher model
-const DataFetcher = require("../models/DataFetcher");
 
 // @route   GET /data-fetcher/list
 // @desc    List data-fetchers
@@ -37,4 +37,4 @@ router.delete("/:id", passport.authenticate("jwt", { session: false }), (req, re
   res.json({ message: "Not implemented yet" });
 });
 
-module.exports = router;
+export default router;

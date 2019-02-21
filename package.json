@@ -1,41 +1,41 @@
 {
-	"name": "trademate-server",
-	"version": "0.0.1",
-	"private": true,
-	"description": "TradeMate bot server used for trading. Made with NodeJS.",
-	"main": "app.js",
-	"dependencies": {
-		"bcryptjs": "^2.4.3",
-		"body-parser": "^1.18.3",
-		"bull": "^3.7.0",
-		"dotenv": "^6.2.0",
-		"express": "~4.16.4",
-		"jsonwebtoken": "^8.5.0",
-		"mongoose": "^5.4.14",
-		"morgan": "~1.9.1",
-		"node-binance-api": "^0.9.0",
-		"nodemon": "^1.18.10",
-		"passport": "^0.4.0",
-		"passport-jwt": "^4.0.0",
-		"validator": "^10.11.0"
-	},
-	"devDependencies": {
-		"nodemon": "^1.18.10"
-	},
-	"scripts": {
-		"start": "nodemon ./bin/www",
-		"install": "npm install -g npm-check-updates npm && npm rebuild",
-		"install:clean": "rm -f ./package-lock.json && rm -rf ./node_modules && npm install",
-		"update": "ncu -u -a"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/woutheijnen/TradeMate-Server.git"
-	},
-	"author": "Wout Heijnen",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/woutheijnen/TradeMate-Server/issues"
-	},
-	"homepage": "https://github.com/woutheijnen/TradeMate-Server#readme"
+  "name": "trademate-server",
+  "version": "0.0.1",
+  "private": true,
+  "description": "TradeMate bot server used for trading. Made with NodeJS.",
+  "main": "app.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "bull": "^3.7.0",
+    "dotenv": "^6.2.0",
+    "express": "~4.16.4",
+    "jsonwebtoken": "^8.5.0",
+    "mongoose": "^5.4.14",
+    "morgan": "~1.9.1",
+    "node-binance-api": "^0.9.0",
+    "nodemon": "^1.18.10",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "start": "nodemon -- --experimental-modules ./bin/www.mjs",
+    "install": "npm install -g npm-check-updates npm && npm rebuild",
+    "install:clean": "rm -f ./package-lock.json && rm -rf ./node_modules && npm install",
+    "update": "ncu -u -a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woutheijnen/TradeMate-Server.git"
+  },
+  "author": "Wout Heijnen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woutheijnen/TradeMate-Server/issues"
+  },
+  "homepage": "https://github.com/woutheijnen/TradeMate-Server#readme"
 }

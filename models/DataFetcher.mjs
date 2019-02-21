@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
+const model = mongoose.model;
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -15,4 +17,4 @@ const DataFetcherSchema = new Schema({
   tradeableAssets: [String]
 });
 
-module.exports = DataFetcher = mongoose.model("data-fetchers", DataFetcherSchema);
+export default model("data-fetchers", DataFetcherSchema);

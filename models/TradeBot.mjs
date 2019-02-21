@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
+const model = mongoose.model;
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -12,4 +14,4 @@ const TradeBotSchema = new Schema({
   tradeableAssets: { type: [String], required: true }
 });
 
-module.exports = TradeBot = mongoose.model("trade-bots", TradeBotSchema);
+export default model("trade-bots", TradeBotSchema);
