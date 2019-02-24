@@ -9,6 +9,9 @@ import dotenv from "dotenv";
 
 import indexRouter from "./routes/index";
 import dataFetcherRouter from "./routes/dataFetcher";
+import dataSetRouter from "./routes/dataSet";
+import exchangeKeySetRouter from "./routes/exchangeKeySet";
+import exchangesRouter from "./routes/exchanges";
 import tradeBotRouter from "./routes/tradeBot";
 import userRouter from "./routes/user";
 
@@ -35,6 +38,9 @@ app.use(logger("dev"));
 // Routes
 app.use("/", indexRouter);
 app.use("/data-fetcher", dataFetcherRouter);
+app.use("/dataset", dataSetRouter);
+app.use("/exchange-key-set", exchangeKeySetRouter);
+app.use("/exchanges", exchangesRouter);
 app.use("/trade-bot", tradeBotRouter);
 app.use("/user", userRouter);
 

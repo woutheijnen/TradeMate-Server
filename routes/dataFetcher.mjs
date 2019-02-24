@@ -39,15 +39,19 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
   newDataFetcher.save().then(fetcher => res.json({ success: true, fetcher }));
 });
 
+// @route   POST /data-fetcher/update
+// @desc    Updates a data-fetcher
+// @access  Private
+
+// TODO : Make endpoint
+
 // @route   DELETE /data-fetcher/:id
 // @desc    Removes a data-fetcher
 // @access  Private
 router.delete("/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-  Profile.findOne({ user: req.user.id }).then(profile => {
-    DataFetcher.findById(req.params.id)
-      .then(fetcher => fetcher.remove().then(() => res.json({ success: true })))
-      .catch(err => res.status(404).json({ message: `No data-fetcher found with id ${req.params.id}` }));
-  });
+  DataFetcher.findById(req.params.id)
+    .then(fetcher => fetcher.remove().then(() => res.json({ success: true })))
+    .catch(err => res.status(404).json({ message: `No data-fetcher found with id ${req.params.id}` }));
 });
 
 export default router;

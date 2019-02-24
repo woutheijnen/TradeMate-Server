@@ -5,16 +5,22 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const DataFetcherSchema = new Schema({
-  exchange: { type: String, required: true },
-  apiKey: { type: String, required: true },
-  apiSecret: { type: String, required: true },
+  exchangeKeySet: { type: Schema.Types.ObjectId, ref: "exchange-key-sets", required: true },
   from: { type: Date, required: true },
+  // To date not required, can be kept up to date
   to: { type: Date },
-  // Keep records up to date
-  keepUpToDate: { type: Boolean, required: true },
   // In minutes
   timeframe: { type: Number, required: true },
-  assets: [String]
+  assets: {
+    type: [
+      {
+        first: { type: String, required: true },
+        second: { type: String, required: true }
+      }
+    ],
+    required: true
+  },
+  status: { type: String, default: "running" }
 });
 
 export default model("data-fetchers", DataFetcherSchema);
