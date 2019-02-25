@@ -27,6 +27,7 @@ router.get("/me", passport.authenticate("jwt", { session: false }), (req, res) =
 // @desc    Login user / Returning JWT Token
 // @access  Public
 router.post("/login", (req, res) => {
+  const timestamp = Math.floor(+new Date());
   const { errors, isValid } = validateLoginInput(req.body);
 
   // Check Validation
@@ -40,28 +41,37 @@ router.post("/login", (req, res) => {
   // Find user by email
   User.findOne({ email }).then(user => {
     // Check for user & password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user ? user.password : "").then(isMatch => {
       if (user && isMatch) {
-        // User Matched
-        const payload = getPayload(req, user);
-
-        // Create JWT Payload & Sign Token
+        // User Matched, Create JWT Payload & Sign Token
         jwt.sign(
-          payload,
+          getPayload(req, user),
           passportSecretKey,
           {
             expiresIn: 3600
           },
           (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
+            setTimeout(
+              function() {
+                res.json({
+                  success: true,
+                  token: "Bearer " + token
+                });
+              },
+              getResponseTimeout(timestamp),
+              res
+            );
           }
         );
       } else {
         errors.email = "Email or password incorrect";
-        return res.status(400).json(errors);
+        setTimeout(
+          function() {
+            res.status(400).json(errors);
+          },
+          getResponseTimeout(timestamp),
+          res
+        );
       }
     });
   });
@@ -119,6 +129,12 @@ const getPayload = (req, user) => {
     remoteAddress: req.connection.remoteAddress,
     xForwardedFor: req.headers["x-forwarded-for"]
   };
+};
+
+const getResponseTimeout = timestamp => {
+  const addTimeout = 10000 + Math.floor(Math.random() * 3000 - 1500);
+  const passed = Math.floor(+new Date()) - timestamp;
+  return Math.max(addTimeout - passed, 1);
 };
 
 export default router;
