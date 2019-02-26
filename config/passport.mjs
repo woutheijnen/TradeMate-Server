@@ -1,5 +1,6 @@
 import passport from "passport-jwt";
 import { passportSecretKey } from "./keys";
+import User from "../models/User";
 
 const ExtractJwt = passport.ExtractJwt;
 const Strategy = passport.Strategy;
