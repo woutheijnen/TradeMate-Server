@@ -21,12 +21,6 @@ export default data => {
   if (!Validator.isEmpty(data.username)) {
     errors.username = "Username is required";
   }
-  if (!Validator.isEmpty(data.apiKey)) {
-    errors.apiKey = "Api key is required";
-  }
-  if (!Validator.isEmpty(data.apiSecret)) {
-    errors.apiSecret = "Api secret is required";
-  }
 
   return {
     errors,
