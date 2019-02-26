@@ -10,7 +10,7 @@ export default data => {
   data.apiKey = !isEmpty(data.apiKey) ? data.apiKey : "";
   data.apiSecret = !isEmpty(data.apiSecret) ? data.apiSecret : "";
 
-  if (!Validator.isEmpty(data.exchange)) {
+  if (Validator.isEmpty(data.exchange)) {
     errors.exchange = "Exchange name is required";
   } else {
     // Check if exchange name is in EXCHANGES constant
@@ -18,7 +18,7 @@ export default data => {
       errors.exchange = "Exchange is not known";
     }
   }
-  if (!Validator.isEmpty(data.username)) {
+  if (Validator.isEmpty(data.username)) {
     errors.username = "Username is required";
   }
 
