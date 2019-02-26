@@ -11,7 +11,7 @@ router.get("/list", passport.authenticate("jwt", { session: false }), (req, res)
   DataSet.find()
     .sort({ date: -1 })
     .then(dataset => res.json(dataset))
-    .catch(err => res.status(404).json({ message: "No datasets found" }));
+    .catch(err => res.status(404).json({ error: "No datasets found" }));
 });
 
 // @route   GET /dataset/:id
@@ -20,7 +20,7 @@ router.get("/list", passport.authenticate("jwt", { session: false }), (req, res)
 router.get("/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
   DataSet.findById(req.params.id)
     .then(dataset => res.json(dataset))
-    .catch(err => res.status(404).json({ message: `No dataset found with id ${req.params.id}` }));
+    .catch(err => res.status(404).json({ error: `No dataset found with id ${req.params.id}` }));
 });
 
 export default router;

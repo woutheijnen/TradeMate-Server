@@ -46,7 +46,7 @@ app.use("/user", userRouter);
 
 // HTTP Error 404 handler
 app.use(function(req, res, next) {
-  res.status(404).json({ status: 404, message: `Cannot ${req.method} ${req.path}` });
+  res.status(404).json({ error: `Cannot ${req.method} ${req.path}` });
 });
 
 export default app;

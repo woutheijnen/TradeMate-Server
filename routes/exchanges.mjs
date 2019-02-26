@@ -11,4 +11,15 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => 
   res.json(EXCHANGES);
 });
 
+// @route   GET /exchanges/:exchange
+// @desc    Get information for an exchange
+// @access  Private
+router.get("/:exchange", passport.authenticate("jwt", { session: false }), (req, res) => {
+  if (typeof req.params.exchange === "string" && req.params.exchange.toLowerCase() === "binance") {
+    res.json({ message: "todo" });
+  } else {
+    res.status(404).json({ error: `Exchange ${req.params.exchange} not known` });
+  }
+});
+
 export default router;

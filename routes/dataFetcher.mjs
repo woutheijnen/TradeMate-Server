@@ -13,7 +13,7 @@ router.get("/list", passport.authenticate("jwt", { session: false }), (req, res)
   DataFetcher.find()
     .sort({ date: -1 })
     .then(fetcher => res.json(fetcher))
-    .catch(err => res.status(404).json({ message: "No data-fetchers found" }));
+    .catch(err => res.status(404).json({ error: "No data-fetchers found" }));
 });
 
 // @route   GET /data-fetcher/:id
@@ -22,7 +22,7 @@ router.get("/list", passport.authenticate("jwt", { session: false }), (req, res)
 router.get("/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
   DataFetcher.findById(req.params.id)
     .then(fetcher => res.json(fetcher))
-    .catch(err => res.status(404).json({ message: `No data-fetcher found with id ${req.params.id}` }));
+    .catch(err => res.status(404).json({ error: `No data-fetcher found with id ${req.params.id}` }));
 });
 
 // @route   POST /data-fetcher/create
@@ -51,7 +51,7 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
 router.delete("/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
   DataFetcher.findById(req.params.id)
     .then(fetcher => fetcher.remove().then(() => res.json({ success: true })))
-    .catch(err => res.status(404).json({ message: `No data-fetcher found with id ${req.params.id}` }));
+    .catch(err => res.status(404).json({ error: `No data-fetcher found with id ${req.params.id}` }));
 });
 
 export default router;
