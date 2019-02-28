@@ -1,5 +1,15 @@
-import Binance from "binance-api-node";
+import BinanceApi from "binance-api-node";
 
-const client = Binance();
+if (!global.binance) {
+  global.binance = new class Binance {
+    constructor() {
+      this.client = BinanceApi();
+    }
 
-// todo make this export a singleton
+    getExchangeInfo() {
+      return { message: "ok" };
+    }
+  }();
+}
+
+export default global.binance;
